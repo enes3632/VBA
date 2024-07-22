@@ -1,0 +1,739 @@
+
+Private Sub CommandButton10_Click()
+
+If TextBox11.Visible = False Then
+    Label16.Visible = True
+    Label16.Caption = "What do you want to add to the location list? Just write and press OK"
+    TextBox11.Visible = True
+    CommandButton11.Visible = True
+    CommandButton12.Visible = True
+    
+ElseIf TextBox11.Visible = True Then
+    Label16.Visible = False
+    TextBox11.Visible = False
+    CommandButton11.Visible = False
+    CommandButton12.Visible = False
+    
+End If
+
+End Sub
+
+Private Sub CommandButton11_Click()
+
+If TextBox9 <> "" Then
+    Sheets("Sayfa2").Activate
+    ActiveSheet.Cells(2, 2).Select
+    
+        Do Until Selection.Value = ""
+            Selection.Offset(1, 0).Select
+        Loop
+        
+    Selection.Value = TextBox9.Text
+    ListBox1.RowSource = "Sayfa2!B2:C" & Sayfa2.Range("b65536").End(3).Row
+    TextBox9.Visible = False
+    CommandButton11.Visible = False
+    CommandButton12.Visible = False
+    Label16.Visible = False
+    
+ElseIf TextBox10 <> "" Then
+    Sheets("Sayfa2").Activate
+    ActiveSheet.Cells(2, 4).Select
+    
+        Do Until Selection.Value = ""
+            Selection.Offset(1, 0).Select
+        Loop
+        
+    Selection.Value = TextBox10.Text
+    ListBox2.RowSource = "Sayfa2!D2:E" & Sayfa2.Range("d65536").End(3).Row
+    TextBox10.Visible = False
+    CommandButton11.Visible = False
+    CommandButton12.Visible = False
+    Label16.Visible = False
+    
+ElseIf TextBox11 <> "" Then
+    Sheets("Sayfa2").Activate
+    ActiveSheet.Cells(2, 3).Select
+    
+        Do Until Selection.Value = ""
+            Selection.Offset(1, 0).Select
+        Loop
+        
+    Selection.Value = TextBox11.Text
+    ListBox3.RowSource = "Sayfa2!C2:D" & Sayfa2.Range("c65536").End(3).Row
+    TextBox11.Visible = False
+    CommandButton11.Visible = False
+    CommandButton12.Visible = False
+    Label16.Visible = False
+    
+End If
+
+End Sub
+
+Private Sub CommandButton12_Click()
+
+Label16.Visible = False
+TextBox9.Visible = False
+TextBox10.Visible = False
+TextBox11.Visible = False
+CommandButton11.Visible = False
+CommandButton12.Visible = False
+
+End Sub
+
+Private Sub CommandButton7_Click()
+
+Dim a As Integer
+Sayfa3.Range("I2").Select
+
+    Do Until TextBox8.Text = Selection.Value Or Selection.Value = ""
+        Selection.Offset(1, 0).Select
+    Loop
+    
+If MsgBox("Are you sure?", vbYesNo, "Warning!!!") = vbYes Then
+    
+    With Selection
+        .Value = ""
+        .Offset(0, -1).Select
+        .Value = ""
+        .Offset(0, -1).Select
+        .Value = ""
+        .Offset(0, -1).Select
+        .Value = ""
+        .Offset(0, -1).Select
+        .Value = ""
+        .Offset(0, -1).Select
+        .Value = ""
+        .Offset(0, -1).Select
+        .Value = ""
+        .Offset(0, -1).Select
+        .Value = ""
+        .Offset(0, -1).Select
+        .Value = ""
+    End With
+    
+    Rows(ActiveCell.Row).EntireRow.Delete
+    MsgBox "Kayýt baþarýyla silindi"
+    a = Application.WorksheetFunction.Max(Sayfa3.Range(Cells(2, 9), Cells(6000, 9)))
+    Label14.Caption = "Biggest Personnel No: " & a
+
+End If
+
+End Sub
+
+Private Sub CommandButton7_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
+
+If TextBox8.Text = "" Then
+    CommandButton7.Locked = True
+
+End If
+
+End Sub
+
+Private Sub CommandButton8_Click()
+
+If TextBox10.Visible = False Then
+    Label16.Visible = True
+    Label16.Caption = "What do you want to add to the department list? Just write and press OK"
+    TextBox10.Visible = True
+    CommandButton11.Visible = True
+    CommandButton12.Visible = True
+    
+ElseIf TextBox10.Visible = True Then
+    Label16.Visible = False
+    TextBox10.Visible = False
+    CommandButton11.Visible = False
+    CommandButton12.Visible = False
+    
+End If
+
+End Sub
+
+Private Sub CommandButton9_Click()
+
+If TextBox9.Visible = False Then
+    Label16.Visible = True
+    Label16.Caption = "What do you want to add to the title list? Just write and press OK"
+    TextBox9.Visible = True
+    CommandButton11.Visible = True
+    CommandButton12.Visible = True
+    
+ElseIf TextBox9.Visible = True Then
+    Label16.Visible = False
+    TextBox9.Visible = False
+    CommandButton11.Visible = False
+    CommandButton12.Visible = False
+    
+End If
+
+End Sub
+
+Private Sub Label11_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
+
+  Dim FD As FileDialog
+  Dim FFs As FileDialogFilters
+  Dim stFileName As String
+  Dim vaItem
+  On Error GoTo problem
+  Set FD = Application.FileDialog(msoFileDialogOpen)
+  With FD
+     Set FFs = .Filters
+    With FFs
+      .Clear
+      .Add "Pictures", "*.jpg"
+    End With
+    .AllowMultiSelect = True
+    If .Show = False Then Exit Sub
+    ComboBox1.Clear
+    For Each vaItem In .SelectedItems
+      ComboBox1.AddItem vaItem
+    Next vaItem
+    ComboBox1.ListIndex = 0
+  End With
+  Exit Sub
+problem:
+  MsgBox "Geçerli bir resim dosyasý deðil."
+  
+  End Sub
+  
+Private Sub ComboBox1_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
+
+  Dim FD As FileDialog
+  Dim FFs As FileDialogFilters
+  Dim stFileName As String
+  Dim vaItem
+  On Error GoTo problem
+  Set FD = Application.FileDialog(msoFileDialogOpen)
+  With FD
+     Set FFs = .Filters
+    With FFs
+      .Clear
+      .Add "Pictures", "*.jpg"
+    End With
+    .AllowMultiSelect = True
+    If .Show = False Then Exit Sub
+    ComboBox1.Clear
+    For Each vaItem In .SelectedItems
+      ComboBox1.AddItem vaItem
+    Next vaItem
+    ComboBox1.ListIndex = 0
+  End With
+  Exit Sub
+problem:
+  MsgBox "Geçerli bir resim dosyasý deðil."
+  
+End Sub
+
+Private Sub ComboBox1_Change()
+
+If IsEmpty(ComboBox1) = False Then
+  Image1.Picture = LoadPicture(ComboBox1.Text)
+  
+Else
+  MsgBox "resim yok"
+  
+End If
+
+End Sub
+
+Private Sub CommandButton1_Click()
+
+If ListBox1.Visible = False Then
+
+    ListBox1.Visible = True
+
+ElseIf ListBox1.Visible = True Then
+    ListBox1.Visible = False
+
+End If
+
+End Sub
+
+Private Sub CommandButton2_Click()
+
+If ListBox3.Visible = False Then
+    ListBox3.Visible = True
+
+ElseIf ListBox3.Visible = True Then
+    ListBox3.Visible = False
+
+End If
+
+End Sub
+
+Private Sub CommandButton3_Click()
+
+If ListBox2.Visible = False Then
+    ListBox2.Visible = True
+
+ElseIf ListBox2.Visible = True Then
+    ListBox2.Visible = False
+
+End If
+
+End Sub
+
+Private Sub CommandButton4_Click()
+
+Dim a, x As Integer
+
+Sayfa3.Range("I2").Select
+
+    Do Until TextBox8.Text = Selection.Value Or Selection.Value = ""
+        Selection.Offset(1, 0).Select
+    Loop
+    
+If Selection.Value = TextBox8.Text Then
+    GoTo Label1
+    
+ElseIf Selection.Value = "" Then
+
+        Selection.Value = TextBox8.Text
+        Selection.Offset(0, -1).Value = ComboBox1.Value
+        Selection.Offset(0, -2).Value = TextBox7.Text
+        Selection.Offset(0, -3).Value = ComboBox2.Text
+        Selection.Offset(0, -4).Value = TextBox6.Text
+        Selection.Offset(0, -5).Value = TextBox4.Text
+        Selection.Offset(0, -6).Value = TextBox5.Text
+        Selection.Offset(0, -7).Value = TextBox3.Text
+        Selection.Offset(0, -8).Value = TextBox2.Text
+        Selection.Offset(1, 0).Select
+    
+    a = Application.WorksheetFunction.Max(Sayfa3.Range(Cells(2, 9), Cells(6000, 9)))
+    Label14.Caption = "Biggest Personnel No: " & a
+    GoTo Label2
+
+End If
+
+Label1:
+
+If MsgBox("Someone (" & Selection.Offset(0, -8).Value & ") has saved with that personnel number. Do you want to save changes?", vbYesNo, "Warning") = vbYes Then
+    
+        Selection.Value = TextBox8.Text
+        Selection.Offset(0, -1).Value = ComboBox1.Value
+        Selection.Offset(0, -2).Value = TextBox7.Text
+        Selection.Offset(0, -3).Value = ComboBox2.Text
+        Selection.Offset(0, -4).Value = TextBox6.Text
+        Selection.Offset(0, -5).Value = TextBox4.Text
+        Selection.Offset(0, -6).Value = TextBox5.Text
+        Selection.Offset(0, -7).Value = TextBox3.Text
+        Selection.Offset(0, -8).Value = TextBox2.Text
+        Selection.Offset(0, 1).Select
+    
+    a = Application.WorksheetFunction.Max(Sayfa3.Range(Cells(2, 9), Cells(6000, 9)))
+    Label14.Caption = "Biggest Personnel No: " & a
+
+End If
+
+Label2:
+
+End Sub
+
+Private Sub CommandButton4_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
+
+Dim a As Integer
+
+Sheets("Sayfa3").Activate
+a = Application.WorksheetFunction.Max(Sayfa3.Range(Cells(2, 9), Cells(6000, 9))) + 1
+
+If TextBox8.Text = "" Then
+
+Else
+    GoTo Label2
+
+End If
+
+If MsgBox("Personnel number will be that number:" & a, vbYesNo, "Warning") = vbYes Then
+    TextBox8.Value = a
+
+End If
+
+Label2:
+
+End Sub
+
+Private Sub CommandButton5_Click()
+
+Dim a As Integer
+
+TextBox2.Text = Sayfa3.Cells(2, 1).Value
+TextBox3.Text = Sayfa3.Cells(2, 2).Value
+TextBox5.Text = Sayfa3.Cells(2, 3).Value
+TextBox4.Text = Sayfa3.Cells(2, 4).Value
+TextBox6.Text = Sayfa3.Cells(2, 5).Value
+ComboBox2.Text = Sayfa3.Cells(2, 6).Value
+TextBox7.Text = Sayfa3.Cells(2, 7).Value
+TextBox8.Text = Sayfa3.Cells(2, 9).Value
+ComboBox1.Text = Sayfa3.Cells(2, 8).Value
+Image1.Picture = LoadPicture(ComboBox1.Text)
+ListBox4.RowSource = "Sayfa3!A2:B" & Sayfa3.Range("a65536").End(3).Row + 1
+ListBox5.RowSource = "Sayfa3!I2:J" & Sayfa3.Range("a65536").End(3).Row + 1
+a = Application.WorksheetFunction.Max(Sayfa3.Range(Cells(2, 9), Cells(6000, 9)))
+Label14.Caption = "Biggest Personnel No: " & a
+
+End Sub
+
+Private Sub CommandButton6_Click()
+
+Sheets("Sayfa3").Activate
+Sayfa3.Range("A1").Select
+ComboBox1.Value = ""
+ComboBox2.Value = ""
+TextBox2.Value = "Name & Lastname"
+TextBox3.Value = ""
+TextBox4.Value = ""
+TextBox5.Value = ""
+TextBox6.Value = "dd/mm/yyyy"
+TextBox7.Value = "yyyy"
+TextBox8.Value = ""
+
+End Sub
+
+Private Sub ListBox1_Click()
+
+ListBox1.Value = TextBox3.Value
+'If ListBox1.Value = "General Manager" Then
+'TextBox3.Value = "General Manager"
+'ElseIf ListBox1.Value = "Purchasing Manager" Then
+'TextBox3.Value = "Purchasing Manager"
+'ElseIf ListBox1.Value = "Technical Manager" Then
+'TextBox3.Value = "Technical Manager"
+'ElseIf ListBox1.Value = "Human Resource Manager" Then
+'TextBox3.Value = "Human Resource Manager"
+'ElseIf ListBox1.Value = "Quality Manager" Then
+'TextBox3.Value = "Quality Manager"
+'ElseIf ListBox1.Value = "IT Manager" Then
+'TextBox3.Value = "IT Manager"
+'ElseIf ListBox1.Value = "Production Planning Manager" Then
+'TextBox3.Value = "Production Planning Manager"
+'ElseIf ListBox1.Value = "Sales & Marketing Manager" Then
+'TextBox3.Value = "Sales & Marketing Manager"
+'ElseIf ListBox1.Value = "Business Analyst" Then
+'TextBox3.Value = "Business Analyst"
+'ElseIf ListBox1.Value = "Quality Control Responsible" Then
+'TextBox3.Value = "Quality Control Responsible"
+'End If
+ListBox1.Visible = False
+
+End Sub
+
+Private Sub OptionButton1_Click()
+
+TextBox1.Value = OptionButton1.Caption & " Mezunu"
+
+End Sub
+
+Private Sub ListBox2_Click()
+
+If ListBox2.Value = "Cerkezkoy Plant" Then
+    TextBox4.Value = "Cerkezkoy Plant"
+    
+ElseIf ListBox2.Value = "Kýrac Wharehouse" Then
+    TextBox4.Value = "Kýrac Wharehouse"
+
+ElseIf ListBox2.Value = "Istanbul Office" Then
+    TextBox4.Value = "Istanbul Office"
+
+End If
+
+ListBox2.Visible = False
+
+End Sub
+
+Private Sub ListBox3_Click()
+
+If ListBox3.Value = "Sales & Marketing" Then
+    TextBox5.Value = "Sales & Marketing"
+
+ElseIf ListBox3.Value = "Quality" Then
+    TextBox5.Value = "Quality"
+
+ElseIf ListBox3.Value = "Technical" Then
+    TextBox5.Value = "Technical"
+
+ElseIf ListBox3.Value = "Purchasing" Then
+    TextBox5.Value = "Purchasing"
+
+ElseIf ListBox3.Value = "Human Resources" Then
+    TextBox5.Value = "Human Resources"
+
+ElseIf ListBox3.Value = "Production Planning" Then
+    TextBox5.Value = "Production Planning"
+
+ElseIf ListBox3.Value = "IT" Then
+    TextBox5.Value = "IT"
+
+ElseIf ListBox3.Value = "Administrative Affairs" Then
+    TextBox5.Value = "Administrative Affairs"
+
+End If
+
+ListBox3.Visible = False
+
+End Sub
+
+Private Sub ListBox4_Click()
+
+Dim x, y As Integer
+Dim GUN&, AY%, YIL%
+Dim GG As Date, GG2 As Date
+
+For x = 2 To 6000
+    If Cells(x, 1).Value = ListBox4.Value Then
+        TextBox2.Text = Sayfa3.Cells(x, 1).Value
+        TextBox3.Text = Sayfa3.Cells(x, 2).Value
+        TextBox5.Text = Sayfa3.Cells(x, 3).Value
+        TextBox4.Text = Sayfa3.Cells(x, 4).Value
+        TextBox6.Text = Sayfa3.Cells(x, 5).Value
+        ComboBox2.Text = Sayfa3.Cells(x, 6).Value
+        TextBox7.Text = Sayfa3.Cells(x, 7).Value
+        TextBox8.Text = Sayfa3.Cells(x, 9).Value
+        ComboBox1.Text = Sayfa3.Cells(x, 8).Value
+        GoTo 1
+    
+    End If
+
+Next x
+
+1:
+
+For y = 2 To 1000
+    If Sayfa3.Cells(y, 9).Value = TextBox8.Text And Sayfa3.Cells(y, 5) <> "" And Sayfa3.Cells(y, 5) <> "dd/mm/yyyy" Then
+        GUN = DateDiff("d", Sayfa3.Cells(y, 5), Sayfa3.Cells(1, 10))
+        AY = Int((GUN Mod 365.25) / 30)
+        YIL = Int(GUN \ 365.25)
+        GG = DateAdd("yyyy", YIL, Sayfa3.Cells(y, 5))
+        GG2 = DateAdd("m", AY, GG)
+        DateDiff_ze_bb = YIL & " YIL " & AY & " AY " & (Sayfa3.Cells(1, 10) - GG2) & " GÜN  "
+        Label15.Caption = DateDiff_ze_bb
+        YIL = 0
+        AY = 0
+    
+    End If
+
+Next y
+
+End Sub
+
+Private Sub ListBox5_Click()
+
+Dim x, y As Integer
+Dim GUN&, AY%, YIL%
+
+For x = 2 To 6000
+    If Cells(x, 9).Value = ListBox5.Value Then
+        TextBox2.Text = Sayfa3.Cells(x, 1).Value
+        TextBox3.Text = Sayfa3.Cells(x, 2).Value
+        TextBox5.Text = Sayfa3.Cells(x, 3).Value
+        TextBox4.Text = Sayfa3.Cells(x, 4).Value
+        TextBox6.Text = Sayfa3.Cells(x, 5).Value
+        ComboBox2.Text = Sayfa3.Cells(x, 6).Value
+        TextBox7.Text = Sayfa3.Cells(x, 7).Value
+        TextBox8.Text = Sayfa3.Cells(x, 9).Value
+        ComboBox1.Text = Sayfa3.Cells(x, 8).Value
+        GoTo label97
+    
+    End If
+
+Next x
+
+label97:
+
+For y = 2 To 1000
+    If Sayfa3.Cells(y, 9).Value = TextBox8.Text And Sayfa3.Cells(y, 5).Value <> "" And Sayfa3.Cells(y, 5).Value <> "dd/mm/yyyy" Then
+        GUN = DateDiff("d", Sayfa3.Cells(y, 5), Sayfa3.Cells(1, 10))
+        AY = Int((GUN Mod 365.25) / 30)
+        YIL = Int(GUN \ 365.25)
+        GG = DateAdd("yyyy", YIL, Sayfa3.Cells(y, 5))
+        GG2 = DateAdd("m", AY, GG)
+        DateDiff_ze_bb = YIL & " YIL " & AY & " AY " & (Sayfa3.Cells(1, 10) - GG2) & " GÜN  "
+        Label15.Caption = DateDiff_ze_bb
+        YIL = 0
+        AY = 0
+    
+    End If
+
+Next y
+
+End Sub
+
+Private Sub SpinButton1_Spindown()
+
+Sheets("Sayfa3").Activate
+ActiveSheet.Cells(2, 9).Select
+TextBox8.Value = TextBox8.Value - 1
+
+Do Until Val(TextBox8.Text) = Selection.Value Or Selection.Value = ""
+    Selection.Offset(1, 0).Select
+Loop
+
+If Selection.Value <> "" Then
+    Selection.Offset(0, -1).Select
+    ComboBox1.Text = Selection.Value
+    Selection.Offset(0, -1).Select
+    TextBox7.Text = Selection.Value
+    Selection.Offset(0, -1).Select
+    ComboBox2.Text = Selection.Value
+    Selection.Offset(0, -1).Select
+    TextBox6.Text = Selection.Value
+    Selection.Offset(0, -1).Select
+    TextBox4.Text = Selection.Value
+    Selection.Offset(0, -1).Select
+    TextBox5.Text = Selection.Value
+    Selection.Offset(0, -1).Select
+    TextBox3.Text = Selection.Value
+    Selection.Offset(0, -1).Select
+    TextBox2.Text = Selection.Value
+
+Else
+    TextBox8.Value = TextBox8.Value + 1
+
+End If
+
+End Sub
+
+Private Sub SpinButton1_Spinup()
+
+Sheets("Sayfa3").Activate
+ActiveSheet.Cells(2, 9).Select
+TextBox8.Value = TextBox8.Value + 1
+
+Do Until Val(TextBox8.Text) = Selection.Value Or Selection.Value = ""
+    Selection.Offset(1, 0).Select
+Loop
+
+If Selection.Value <> "" Then
+    Selection.Offset(0, -1).Select
+    ComboBox1.Text = Selection.Value
+    Selection.Offset(0, -1).Select
+    TextBox7.Text = Selection.Value
+    Selection.Offset(0, -1).Select
+    ComboBox2.Text = Selection.Value
+    Selection.Offset(0, -1).Select
+    TextBox6.Text = Selection.Value
+    Selection.Offset(0, -1).Select
+    TextBox4.Text = Selection.Value
+    Selection.Offset(0, -1).Select
+    TextBox5.Text = Selection.Value
+    Selection.Offset(0, -1).Select
+    TextBox3.Text = Selection.Value
+    Selection.Offset(0, -1).Select
+    TextBox2.Text = Selection.Value
+
+Else
+    TextBox8.Value = TextBox8.Value - 1
+
+End If
+
+End Sub
+
+Private Sub TextBox2_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
+
+If TextBox2.Value = "Name & Lastname" Then
+    TextBox2.Value = ""
+
+End If
+
+End Sub
+
+Private Sub TextBox6_Change()
+
+Dim GUN&, AY%, YIL%
+Dim GG As Date, GG2 As Date
+Dim x As Integer
+
+For x = 2 To 1000
+    If Sayfa3.Cells(x, 9).Value = TextBox8.Text And Sayfa3.Cells(x, 5).Value <> "" And Sayfa3.Cells(x, 5).Value <> "dd/mm/yyyy" Then
+        GUN = DateDiff("d", Sayfa3.Cells(x, 5), Sayfa3.Cells(1, 10))
+        AY = Int((GUN Mod 365.25) / 30)
+        YIL = Int(GUN \ 365.25)
+        GG = DateAdd("yyyy", YIL, Sayfa3.Cells(x, 5))
+        GG2 = DateAdd("m", AY, GG)
+        DateDiff_ze_bb = YIL & " YIL " & AY & " AY " & (Sayfa3.Cells(1, 10) - GG2) & " GÜN  "
+        Label15.Caption = DateDiff_ze_bb
+        YIL = 0
+        AY = 0
+    
+    End If
+
+Next x
+
+End Sub
+
+Private Sub TextBox6_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
+
+If TextBox6.Value = "dd/mm/yyyy" Then
+    TextBox6.Value = ""
+End If
+
+End Sub
+
+Private Sub TextBox7_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
+
+If TextBox7.Value = "yyyy" Then
+    TextBox7.Value = ""
+    Label10.Caption = " Age"
+    Exit Sub
+
+ElseIf IsEmpty(TextBox7) = False Then
+    Label10.Caption = 2018 - Val(TextBox7.Text) & " Age"
+
+End If
+
+End Sub
+
+Private Sub TextBox7_Change()
+
+If Val(TextBox7.Text) < 2018 And TextBox7.Text <> "" Then
+    Label10.Caption = 2018 - Val(TextBox7.Text) & " Age"
+
+ElseIf TextBox7.Text = "" Then
+    Label10.Caption = " Age"
+
+End If
+
+End Sub
+
+Private Sub UserForm_Activate()
+
+Dim a, y As Integer
+Dim GUN&, AY%, YIL%
+Dim GG As Date, GG2 As Date
+
+Sheets("Sayfa3").Activate
+a = Application.WorksheetFunction.Max(Sayfa3.Range(Cells(2, 9), Cells(6000, 9)))
+Label14.Caption = "Biggest Personnel No: " & a
+TextBox2.Text = Sayfa3.Cells(2, 1).Value
+TextBox3.Text = Sayfa3.Cells(2, 2).Value
+TextBox5.Text = Sayfa3.Cells(2, 3).Value
+TextBox4.Text = Sayfa3.Cells(2, 4).Value
+TextBox6.Text = Sayfa3.Cells(2, 5).Value
+ComboBox2.Text = Sayfa3.Cells(2, 6).Value
+TextBox7.Text = Sayfa3.Cells(2, 7).Value
+TextBox8.Text = Sayfa3.Cells(2, 9).Value
+ComboBox1.Text = Sayfa3.Cells(2, 8).Value
+Image1.Picture = LoadPicture(ComboBox1.Text)
+ListBox1.RowSource = "Sayfa2!B2:C" & Sayfa2.Range("b65536").End(3).Row
+ListBox2.RowSource = "Sayfa2!D2:E" & Sayfa2.Range("d65536").End(3).Row
+ListBox3.RowSource = "Sayfa2!C2:D" & Sayfa2.Range("c65536").End(3).Row
+ListBox4.RowSource = "Sayfa3!A2:B" & Sayfa3.Range("a65536").End(3).Row + 1
+ListBox5.RowSource = "Sayfa3!I2:J" & Sayfa3.Range("a65536").End(3).Row + 1
+
+For y = 2 To 1000
+    If Sayfa3.Cells(y, 9).Value = TextBox8.Text And Sayfa3.Cells(y, 5).Value <> "" And Sayfa3.Cells(y, 5).Value <> "dd/mm/yyyy" Then
+        GUN = DateDiff("d", Sayfa3.Cells(y, 5), Sayfa3.Cells(1, 10))
+        AY = Int((GUN Mod 365.25) / 30)
+        YIL = Int(GUN \ 365.25)
+        GG = DateAdd("yyyy", YIL, Sayfa3.Cells(y, 5))
+        GG2 = DateAdd("m", AY, GG)
+        DateDiff_ze_bb = YIL & " YIL " & AY & " AY " & (Sayfa3.Cells(1, 10) - GG2) & " GÜN  "
+        Label15.Caption = DateDiff_ze_bb
+        YIL = 0
+        AY = 0
+    
+    
+    
+    End If
+
+Next y
+
+End Sub
